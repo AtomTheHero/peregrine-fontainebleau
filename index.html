@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TableSight — Casino Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header id="topbar">
+  <div class="brand">TABLESIGHT<span class="brand-rule"></span></div>
+  <nav id="phaseNav">
+    <button class="phase-btn" data-scene="1">Vision</button>
+    <button class="phase-btn" data-scene="2">Surveillance</button>
+    <button class="phase-btn" data-scene="3">Player Data</button>
+    <button class="phase-btn" data-scene="4">Decision</button>
+    <button class="phase-btn" data-scene="5">Game Protection</button>
+    <button class="phase-btn" data-scene="6">Floor</button>
+  </nav>
+  <div class="controls">
+    <button id="pauseBtn">Pause</button>
+    <button id="restartBtn">Restart</button>
+  </div>
+</header>
+
+<main id="stage">
+
+  <!-- ============ SCENE 1 : VISION CAPTURE ============ -->
+  <section id="scene1" class="scene">
+    <div class="feed-wrap">
+      <div class="feed" id="feed">
+        <!-- table felt — Fontainebleau Las Vegas layout -->
+        <div class="felt">
+          <svg class="felt-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
+            <defs>
+              <path id="arcIns" d="M 55 145 Q 500 300 945 145" fill="none"></path>
+              <path id="arcBj" d="M 140 215 Q 500 330 860 215" fill="none"></path>
+            </defs>
+            <text class="arc-text big" text-anchor="middle"><textPath href="#arcIns" startOffset="50%">INSURANCE &#183; PAYS &#183; 2 TO 1</textPath></text>
+            <text class="arc-text" text-anchor="middle"><textPath href="#arcBj" startOffset="50%">BLACKJACK PAYS 3 TO 2</textPath></text>
+          </svg>
+          <div class="felt-logo">Fontainebleau</div>
+          <div class="felt-arc"></div>
+          <div class="felt-limits">BLACKJACK · $25 — $500</div>
+          <div class="chip-rack"></div>
+          <div class="dealer-shadow"></div>
+          <div class="player-shadow"></div>
+          <div class="shoe" id="shoe">SHOE</div>
+          <div class="discard"></div>
+        </div>
+        <!-- dynamic layers -->
+        <div id="spotLayer"></div>
+        <div id="cardLayer"></div>
+        <div id="chipLayer"></div>
+        <div id="cvLayer"></div>
+        <div id="floatLayer"></div>
+        <!-- HUD -->
+        <div class="feed-hud">
+          <div class="hud-left">
+            <span class="rec-dot"></span> LIVE
+            <span class="hud-cam">Fontainebleau · Pit 3 · Table BJ-07 · Cam 12</span>
+          </div>
+          <div class="hud-right">
+            <span id="hudClock">21:14:32</span>
+          </div>
+        </div>
+        <div class="feed-hud-bottom">
+          <span id="hudOps">Pace 68 hands/hr · Occupancy 5/6 · Dealer eff 101%</span>
+          <span id="hudHands">Session hands: 43</span>
+        </div>
+        <div id="actionBanner"></div>
+        <div class="vignette"></div>
+      </div>
+    </div>
+
+    <aside class="panel live-panel">
+      <div class="panel-title">Live analysis <span class="live-dot"></span></div>
+
+      <div class="skill-hero">
+        <div>
+          <label class="klabel">Skill score</label>
+          <div class="skill-num-row">
+            <span id="skillScoreNum" class="skill-num">–</span>
+            <span id="skillGrade" class="grade-pill">–</span>
+          </div>
+        </div>
+      </div>
+      <div class="meter"><div id="skillMeter"></div></div>
+
+      <div class="group">
+        <div class="group-title">Play quality</div>
+        <div class="stat-row"><span>Basic-strategy adherence</span><b id="adherence">–</b></div>
+        <div class="stat-row"><span>Effective house edge</span><b id="effEdge">–</b></div>
+        <div class="stat-row"><span>Advantage-play probability</span><b id="apProb">–</b></div>
+      </div>
+
+      <div class="group">
+        <div class="group-title">Session</div>
+        <div class="stat-row"><span>Hands played</span><b id="sbHands">–</b></div>
+        <div class="stat-row"><span>Average bet</span><b id="avgBet">–</b></div>
+        <div class="stat-row"><span>Table net (house)</span><b id="sbNet">–</b></div>
+        <div class="stat-row"><span>Theo per hour</span><b id="sbTheo">–</b></div>
+      </div>
+
+      <div class="group">
+        <div class="group-title">Strategy engine</div>
+        <div id="strategyBody" class="strategy-body">Awaiting hand…</div>
+      </div>
+
+      <div class="group">
+        <div class="group-title">Decision history</div>
+        <div id="handChips" class="hand-chips"></div>
+      </div>
+
+      <div class="group stream-group">
+        <div class="group-title">Detection stream</div>
+        <div id="eventLog" class="event-log"></div>
+      </div>
+    </aside>
+
+    <aside class="panel" id="survPanel">
+      <div class="panel-title">Game protection <span class="live-dot"></span></div>
+
+      <div class="skill-hero">
+        <div>
+          <label class="klabel">Protected tonight</label>
+          <div class="skill-num-row">
+            <span id="survTally" class="skill-num surv-tally">$0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-title">Coverage</div>
+        <div class="stat-row"><span>Feeds monitored</span><b>114 / 114 tables</b></div>
+        <div class="stat-row"><span>Incidents flagged tonight</span><b id="survInc">0</b></div>
+        <div class="stat-row"><span>Operator review time saved</span><b class="ok">6.2 hrs / shift</b></div>
+        <div class="stat-row"><span>RFID wager cross-check</span><b class="ok">100% match</b></div>
+      </div>
+
+      <div class="group inc-group">
+        <div class="group-title">Incident feed</div>
+        <div id="incidentList" class="incident-list"></div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ============ SCENE 2 : PLAYER DATA ============ -->
+  <section id="scene2" class="scene">
+    <div class="agg-col agg-stream">
+      <div class="group-title">Raw event stream · 1,284 events this session</div>
+      <div id="rawStream" class="raw-stream"></div>
+    </div>
+
+    <div class="agg-col agg-profile">
+      <div class="profile-card" id="profileCard">
+        <div class="profile-head">
+          <div class="avatar">MT</div>
+          <div>
+            <div class="profile-name" id="pfName">— — —</div>
+            <div class="profile-sub" id="pfTier">Resolving identity…</div>
+          </div>
+          <div class="profile-status" id="pfStatus">Syncing</div>
+        </div>
+        <div class="profile-grid" id="profileGrid"></div>
+      </div>
+    </div>
+
+    <div class="agg-col agg-derived">
+      <div class="group-title">Derived metrics</div>
+      <div id="derivedList" class="derived-list"></div>
+      <div class="pipe-note" id="pipeNote"></div>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 3 : INTELLIGENCE + HOST ============ -->
+  <section id="scene3" class="scene">
+    <div class="intel-col intel-input">
+      <div class="group-title" id="intelInputHead">Input · Player #4187</div>
+      <div id="intelInput" class="intel-input-card"></div>
+    </div>
+
+    <div class="intel-col intel-core">
+      <div class="core-ring" id="coreRing">
+        <div class="core-inner">
+          <div class="core-title">Intelligence core</div>
+          <div class="core-sims" id="coreSims">0</div>
+          <div class="core-sims-label">simulated player futures</div>
+        </div>
+      </div>
+      <div class="core-readouts" id="coreReadouts"></div>
+      <div class="group-title actions-head" id="actionsHead" style="opacity:0">Action evaluation</div>
+      <div id="actionList" class="action-list"></div>
+      <div id="decisionTrace" class="trace-box"></div>
+    </div>
+
+    <div class="intel-col intel-phone">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="phone-status"><span id="phoneClock">9:26 PM</span><span>LTE ▮▮▮</span></div>
+          <div class="app-header">
+            <div class="app-logo">TS</div>
+            <div>
+              <div class="app-title">Host Console</div>
+              <div class="app-sub">Marcus · Exec Host · Fontainebleau</div>
+            </div>
+            <div class="app-live">● LIVE</div>
+          </div>
+          <div id="phoneFeed" class="phone-feed"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 4 : FLOOR ============ -->
+  <section id="scene4" class="scene">
+    <div class="floor-left">
+      <div id="floorStats" class="floor-stats"></div>
+      <div id="floorGrid" class="floor-grid"></div>
+    </div>
+    <aside class="panel floor-queue">
+      <div class="panel-title">Host action queue <span class="live-dot"></span></div>
+      <div id="queueFeed" class="queue-feed"></div>
+    </aside>
+  </section>
+
+  <!-- overlays -->
+  <div id="titleOverlay" class="title-overlay">
+    <div class="title-phase" id="titlePhase"></div>
+    <div class="title-main" id="titleMain"></div>
+    <div class="title-sub" id="titleSub"></div>
+  </div>
+
+  <div id="endOverlay" class="end-overlay">
+    <div class="end-brand">TABLESIGHT</div>
+    <div class="end-line">Every hand seen. Every dollar protected. Every decision optimized.</div>
+    <button id="replayBtn">Replay demo</button>
+  </div>
+</main>
+
+<div id="scrubber">
+  <div id="scrubChapters"></div>
+  <div id="scrubTrack">
+    <div id="scrubFill"></div>
+    <div id="scrubHead"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
