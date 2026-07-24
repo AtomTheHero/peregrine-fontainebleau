@@ -839,7 +839,7 @@ async function runScene2() {
     }
 
     $('pipeNote').innerHTML =
-      `<span class="hl">▸</span> PMS: Fontainebleau Tower Ste. 5804, <span class="hl">checkout tomorrow 11:00</span><br>` +
+      `<span class="hl">▸</span> PMS: Panorama Suite 5804, <span class="hl">checkout tomorrow 11:00</span><br>` +
       `<span class="hl">▸</span> 6 trips / 12 mo · rated play → <span class="hl">38,680 Tier Credits</span><br>` +
       `<span class="hl">▸</span> 1,320 Tier Credits short of <span class="hl">GOLD</span> (40,000)<br>` +
       `<span class="hl">▸</span> Handing off to intelligence layer…`;
@@ -867,7 +867,7 @@ const INTEL_COMP = {
     'effective_edge : <span class="good">2.3%</span> vs 0.5% baseline',
     'adw            : <span class="good">$412 / day</span>',
     'ap_probability : <span class="good">2.1% — cleared</span>',
-    'room_status    : Fontainebleau Twr 5804 · <span class="bad">CHECKOUT 11:00</span>',
+    'room_status    : Panorama Ste 5804 · <span class="bad">CHECKOUT 11:00</span>',
     'churn_risk     : <span class="warn">42%</span>',
     'objective      : <b>maximize retained theo</b>',
   ],
@@ -880,7 +880,7 @@ const INTEL_COMP = {
   ],
   actionsHead: 'ACTION EVALUATION — NET EV = GROSS THEO GAIN − COMP COST',
   actions: [
-    { name: 'Extend suite comp +2 nights — Fontainebleau Tower', sub: '0.91 accept × 0.68 stay × $1,086 wknd theo',
+    { name: 'Extend suite comp +2 nights — Panorama Suite', sub: '0.91 accept × 0.68 stay × $1,086 wknd theo',
       gain: '+$672', cost: '−$260', ev: '+$412', pct: 100, ok: true, selected: true },
     { name: 'Award 1,320 Tier Credits → GOLD now', sub: '0.44 return-trip lift × $1,540 avg trip theo',
       gain: '+$678', cost: '−$360', ev: '+$318', pct: 77, ok: true },
@@ -907,7 +907,7 @@ const INTEL_COMP = {
     <div class="notif-title">Michael Torres — Silver</div>
     <div class="notif-body">
       At <b>BJ-07, Pit 3</b> right now · down $285 tonight.<br>
-      Offer: <b>extend suite comp 2 nights</b> (Fontainebleau Tower Ste. 5804).
+      Offer: <b>extend suite comp 2 nights</b> (Panorama Suite 5804).
     </div>
     <div class="notif-why">
       <b>WHY:</b> Skill grade C− → edge 2.3%. ADW $412/day.
@@ -921,7 +921,7 @@ const INTEL_COMP = {
       <button>Dismiss</button>
     </div>`,
   toasts: [
-    '<b>✓ PMS</b> — Fontainebleau Tower Ste. 5804 extended through Thursday',
+    '<b>✓ PMS</b> — Panorama Suite 5804 extended through Thursday',
     '<b>✓ CRM</b> — offer sent via Fontainebleau Rewards app · read 21:29',
     '<b>✓ LEDGER</b> — comp logged · $260 against $824 projected theo',
   ],
@@ -1247,7 +1247,7 @@ async function runSceneFloor() {
 
   /* stats bar */
   const stats = [
-    ['TABLES LIVE', '114'], ['RATED SESSIONS', '61'], ['THEO TODAY', '$438K'],
+    ['TABLES LIVE', '128'], ['RATED SESSIONS', '61'], ['THEO TODAY', '$438K'],
     ['LEAKAGE RECOVERED', '$23K'], ['DECISIONS TODAY', '217'], ['COMP ROI', '3.2×'],
   ];
   for (const [label, val] of stats) {
