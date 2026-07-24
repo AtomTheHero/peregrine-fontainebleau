@@ -168,7 +168,9 @@ const SPOTS = [
     s.className = 'spot';
     s.style.left = x + '%'; s.style.top = y + '%';
     s.style.transform = `rotate(${r}deg)`;
-    s.innerHTML = '<div class="rect"></div><div class="pair">PAIR</div>';
+    s.innerHTML =
+      '<svg class="bt" viewBox="0 0 34 22"><polygon points="1,1 1,21 15,11"></polygon><polygon points="33,1 33,21 19,11"></polygon></svg>' +
+      '<div class="sb sb1"></div><div class="sb sb2"></div>';
     $('spotLayer').appendChild(s);
   }
 })();

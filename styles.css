@@ -74,12 +74,12 @@ body{
 .felt{
   position:absolute;left:2.5%;right:2.5%;top:4%;bottom:22%;
   background:
-    radial-gradient(ellipse at 50% -10%, rgba(255,255,255,.15), transparent 55%),
+    radial-gradient(ellipse at 50% -10%, rgba(255,255,255,.14), transparent 55%),
     repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, rgba(0,0,0,.022) 0 1px, transparent 1px 3px),
-    radial-gradient(ellipse at 50% 14%, #aeb3b6 0%, #9fa5a9 52%, #8a9095 94%, #81878c 100%);
+    repeating-linear-gradient(90deg, rgba(0,0,0,.02) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at 50% 14%, #c0bcb2 0%, #b1ada3 52%, #9b978d 94%, #918d84 100%);
   border-radius:0 0 50% 50% / 0 0 88% 88%;
-  border:13px solid #1e3450;border-top:none;
+  border:16px solid #1d3350;border-top:none;
   box-shadow:
     inset 0 0 0 2px rgba(6,14,24,.6),
     inset 0 0 0 3px rgba(255,255,255,.12),
@@ -92,33 +92,33 @@ body{
     0 26px 60px rgba(0,0,0,.75);
 }
 .felt-svg{position:absolute;inset:0;width:100%;height:100%}
-.arc-line{fill:none;stroke:rgba(255,255,255,.55);stroke-width:1.6}
 .arc-text{
   font-family:'Inter',-apple-system,sans-serif;font-weight:500;
-  fill:rgba(255,255,255,.66);font-size:13px;letter-spacing:6px;
+  fill:rgba(255,255,255,.62);font-size:12px;letter-spacing:6px;
 }
-.arc-text.big{font-size:15.5px;letter-spacing:7px;fill:rgba(255,255,255,.72)}
-.felt-emblem{
-  position:absolute;top:15%;left:50%;transform:translateX(-50%);
-  width:86px;height:86px;border-radius:50%;
-  border:1.5px solid rgba(255,255,255,.5);
-  box-shadow:inset 0 0 0 4px transparent, inset 0 0 0 5px rgba(255,255,255,.22);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+.arc-text.big{font-size:15px;letter-spacing:8px;fill:rgba(255,255,255,.7)}
+/* small printed wordmark under the dealer position */
+.felt-mark{
+  position:absolute;top:13.5%;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:3px;
 }
-.felt-emblem svg{width:26px;height:17px;fill:rgba(255,255,255,.72)}
-.felt-emblem .fe-name{
+.felt-mark svg{width:24px;height:16px;fill:rgba(255,255,255,.5)}
+.felt-mark div{
   font-family:'Inter',sans-serif;font-size:6.5px;font-weight:600;
-  letter-spacing:2px;color:rgba(255,255,255,.75);margin-left:2px;
+  letter-spacing:2.4px;color:rgba(255,255,255,.55);margin-left:2.4px;
 }
-.felt-emblem .fe-sub{
-  font-family:'Inter',sans-serif;font-size:5px;font-weight:500;
-  letter-spacing:2.6px;color:rgba(255,255,255,.5);margin-left:2.6px;
+/* printed side-bet paytables, like the real layout */
+.paytable{
+  position:absolute;display:flex;flex-direction:column;gap:1.5px;
+  font-family:'Inter',sans-serif;color:rgba(255,255,255,.42);
 }
-.felt-arc{
-  position:absolute;left:12%;right:12%;top:24%;height:48%;
-  border:1px solid rgba(255,255,255,.26);border-top:none;
-  border-radius:0 0 50% 50% / 0 0 90% 90%;
+.paytable b{
+  font-size:6px;font-weight:700;letter-spacing:1.6px;
+  color:rgba(255,255,255,.6);margin-bottom:1px;
 }
+.paytable span{font-size:5px;font-weight:500;letter-spacing:.7px;white-space:nowrap}
+.pt1{left:76.5%;top:25%}
+.pt2{left:76.5%;top:35.5%}
 .felt-limits{
   position:absolute;top:22%;left:12.5%;
   font-family:'Inter',sans-serif;font-size:9.5px;font-weight:500;letter-spacing:1.6px;color:rgba(255,255,255,.92);
@@ -128,29 +128,35 @@ body{
 }
 .chip-rack{
   position:absolute;top:0;left:29%;right:25%;height:5.4%;
+  /* black glass dealer tray, muted chip tubes under the cover */
   background:
-    linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,.04) 45%, rgba(0,0,0,.18)),
+    linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.05) 40%, rgba(0,0,0,.3)),
     repeating-linear-gradient(90deg,
-      #96343e 0 10px,#0a0c10 10px 14px,
-      #27754b 14px 24px,#0a0c10 24px 28px,
-      #d6d0c6 28px 38px,#0a0c10 38px 42px,
-      #23282f 42px 52px,#0a0c10 52px 56px,
-      #5f3a96 56px 66px,#0a0c10 66px 70px);
-  border:2px solid #0c1724;border-top:none;border-radius:0 0 6px 6px;
-  box-shadow:0 5px 16px rgba(0,0,0,.55), inset 0 -4px 8px rgba(0,0,0,.55), inset 0 0 0 1px rgba(160,185,215,.25);
+      #7d3a3f 0 10px,#0b0d11 10px 14px,
+      #2c6350 14px 24px,#0b0d11 24px 28px,
+      #beb9ad 28px 38px,#0b0d11 38px 42px,
+      #262b33 42px 52px,#0b0d11 52px 56px,
+      #52407c 56px 66px,#0b0d11 66px 70px);
+  border:2px solid #10151c;border-top:none;border-radius:0 0 6px 6px;
+  box-shadow:0 6px 18px rgba(0,0,0,.6), inset 0 -5px 10px rgba(0,0,0,.6), inset 0 0 0 1px rgba(150,175,205,.2);
 }
 #spotLayer{position:absolute;inset:0;pointer-events:none}
 .spot{position:absolute;width:56px;height:64px}
-.spot .rect{
-  position:absolute;left:2px;right:2px;top:6px;bottom:6px;
-  border:1.5px solid rgba(255,255,255,.82);border-radius:50%;
+/* main bet spot: the Fontainebleau bowtie, printed in silver */
+.spot .bt{
+  position:absolute;left:50%;top:56%;width:42px;height:28px;
+  transform:translate(-50%,-50%);
+  fill:rgba(255,255,255,.26);stroke:rgba(255,255,255,.85);stroke-width:1.3;
 }
-.spot .pair{
-  position:absolute;left:102%;top:26%;width:30px;height:30px;
-  border:1.5px solid rgba(255,255,255,.68);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Inter',sans-serif;font-size:6.5px;font-weight:500;letter-spacing:1.2px;
-  color:rgba(255,255,255,.85);
+/* printed side-bet marks above each spot */
+.spot .sb{position:absolute;border-radius:50%}
+.spot .sb1{
+  left:-2px;top:-10px;width:14px;height:14px;
+  border:1.2px solid rgba(205,115,105,.7);background:rgba(180,85,75,.22);
+}
+.spot .sb2{
+  right:-4px;top:-13px;width:22px;height:14px;
+  border:1.2px solid rgba(210,155,85,.65);background:rgba(190,125,65,.18);
 }
 .dealer-shadow{
   position:absolute;top:-6%;left:42%;width:16%;height:13%;
