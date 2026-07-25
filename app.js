@@ -15,6 +15,7 @@ let ffTarget = 0;       // fast-forward: consume sleeps instantly until vtime re
 const $ = (id) => document.getElementById(id);
 
 const PACE = 1.15;   // global pacing multiplier (>1 = slower, calmer)
+let SPEED = 2;       // playback speed multiplier (default 2x, adjustable via corner slider)
 
 function sleep(ms) {
   ms = Math.round(ms * PACE);
@@ -32,7 +33,7 @@ function sleep(ms) {
     const step = 40;
     const tick = () => {
       if (myRun !== runId) return reject({ cancelled: true });
-      if (!paused) { elapsed += step; vtime += step; updateScrubber(); }
+      if (!paused) { elapsed += step * SPEED; vtime += step * SPEED; updateScrubber(); }
       if (elapsed >= remaining) return resolve();
       setTimeout(tick, step);
     };
@@ -64,6 +65,10 @@ $('pauseBtn').addEventListener('click', () => {
 });
 $('restartBtn').addEventListener('click', () => startDemo(0));
 $('replayBtn').addEventListener('click', () => startDemo(0));
+$('speedSlider').addEventListener('input', (e) => {
+  SPEED = +e.target.value;
+  $('speedVal').textContent = (SPEED % 1 === 0 ? String(SPEED) : SPEED.toFixed(2).replace(/0$/, '')) + '\u00d7';
+});
 document.querySelectorAll('.phase-btn').forEach(btn =>
   btn.addEventListener('click', () => startDemo(PHASE_STARTS[+btn.dataset.scene])));
 
@@ -183,7 +188,7 @@ let sessionHands = 43, clockSec = 21 * 3600 + 14 * 60 + 32;
 let clockTimer = null;
 
 function fmtClock(s) {
-  const h = Math.floor(s / 3600) % 24, m = Math.floor(s / 60) % 60, ss = s % 60;
+  const h = Math.floor(s / 3600) % 24, m = Math.floor(s / 60) % 60, ss = Math.floor(s) % 60;
   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
 }
 
@@ -338,7 +343,7 @@ function floatText(x, y, txt, color) {
   f.style.left = x + '%'; f.style.top = y + '%'; f.style.color = color;
   f.textContent = txt;
   $('floatLayer').appendChild(f);
-  setTimeout(() => f.remove(), 1700);
+  setTimeout(() => f.remove(), 1700 / SPEED);
 }
 
 /* ---- the scripted hands ---- */
@@ -404,7 +409,7 @@ async function runScene1() {
   updateSession({ edge: '1.9%', avg: '$104' }, [68]);
   updateCountHud();
   clearInterval(clockTimer);
-  clockTimer = setInterval(() => { if (!paused) { clockSec++; $('hudClock').textContent = fmtClock(clockSec); } }, 350);
+  clockTimer = setInterval(() => { if (!paused) { clockSec += SPEED; $('hudClock').textContent = fmtClock(clockSec); } }, 350);
 
   await titleCard('PHASE 01 / 06', 'Computer Vision Capture',
     'One overhead camera per table on the Fontainebleau Las Vegas casino floor. Every card, chip, gesture and payout — detected, classified and scored in real time. No pit clipboard. No guesswork.');
@@ -572,7 +577,7 @@ async function runSceneSurv() {
   $('survInc').textContent = '0';
   clockSec = 21 * 3600 + 38 * 60 + 12;
   clearInterval(clockTimer);
-  clockTimer = setInterval(() => { if (!paused) { clockSec++; $('hudClock').textContent = fmtClock(clockSec); } }, 350);
+  clockTimer = setInterval(() => { if (!paused) { clockSec += SPEED; $('hudClock').textContent = fmtClock(clockSec); } }, 350);
 
   await titleCard('PHASE 02 / 06', 'Surveillance, Automated',
     'The same camera that rates play also protects the game. Payout errors, missed deals, past-posting and chip theft \u2014 flagged in seconds, not found in tape review. No operator watching twelve feeds; the system watches every seat at every table.');
@@ -806,7 +811,7 @@ async function runScene2() {
     $('rawStream').appendChild(row);
     while ($('rawStream').children.length > 24) $('rawStream').removeChild($('rawStream').firstChild);
     evIdx++;
-  }, 260);
+  }, 260 / SPEED);
   const myRun = runId;
   const stopStream = () => clearInterval(streamTimer);
 
@@ -1185,7 +1190,7 @@ async function runSceneAP() {
   houseNet = 75;
   updateSession({ edge: '0.4%', avg: '$25' }, [78]);
   clearInterval(clockTimer);
-  clockTimer = setInterval(() => { if (!paused) { clockSec++; $('hudClock').textContent = fmtClock(clockSec); } }, 350);
+  clockTimer = setInterval(() => { if (!paused) { clockSec += SPEED; $('hudClock').textContent = fmtClock(clockSec); } }, 350);
 
   await titleCard('PHASE 05 / 06', 'The Advantage Player',
     'Same table, 10:41 PM. A new face buys in for $5,000 and plays flawless blackjack. The system that comps weak players is also the one that catches sharp ones.');

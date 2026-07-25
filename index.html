@@ -6,7 +6,7 @@
 <title>TableSight — Casino Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=8">
+<link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
 
@@ -260,6 +260,11 @@
   </div>
 </main>
 
+<div id="speedCtl" title="Playback speed">
+  <span id="speedVal">2&#215;</span>
+  <input id="speedSlider" type="range" min="0.5" max="4" step="0.25" value="2" aria-label="Playback speed">
+</div>
+
 <div id="scrubber">
   <div id="scrubChapters"></div>
   <div id="scrubTrack">
@@ -268,6 +273,6 @@
   </div>
 </div>
 
-<script src="app.js?v=8"></script>
+<script src="app.js?v=9"></script>
 </body>
 </html>

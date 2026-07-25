@@ -649,3 +649,15 @@ body.surv-mode #survPanel{display:flex}
   position:absolute;top:50%;margin-top:-3px;width:6px;height:6px;margin-left:-3px;
   border-radius:50%;background:#2A303A;pointer-events:none;
 }
+
+/* ---------- playback speed (subtle corner control) ---------- */
+#speedCtl{
+  position:fixed;right:12px;bottom:62px;z-index:70;
+  display:flex;align-items:center;gap:6px;
+  opacity:.16;transition:opacity .25s;
+}
+#speedCtl:hover{opacity:1}
+#speedVal{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--dim);min-width:22px;text-align:right}
+#speedSlider{width:60px;height:2px;-webkit-appearance:none;appearance:none;background:var(--line);border-radius:2px;outline:none;cursor:pointer;margin:0}
+#speedSlider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:8px;height:8px;border-radius:50%;background:var(--dim);border:none}
+#speedSlider::-moz-range-thumb{width:8px;height:8px;border:none;border-radius:50%;background:var(--dim)}
