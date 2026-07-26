@@ -1,5 +1,5 @@
 /* ============================================================
-   TABLESIGHT — executive demo (dark redesign)
+   PEREGRINE — executive demo (dark redesign)
    1 Vision capture · 2 Player data · 3 Decision engine
    4 Game protection · 5 Floor view
    ============================================================ */
