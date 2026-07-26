@@ -308,9 +308,9 @@ function chipStack(x, y, colors) {
 
 /* ---- gesture read-out chip (replaces animated hand) ---- */
 const GESTURE_LABEL = {
-  STAND: 'Wave over cards — STAND',
-  HIT: 'Tap on felt — HIT',
-  DOUBLE: 'Chip push — DOUBLE DOWN',
+  STAND: 'Wave over cards: STAND',
+  HIT: 'Tap on felt: HIT',
+  DOUBLE: 'Chip push: DOUBLE DOWN',
 };
 
 async function animateGesture(kind) {
@@ -353,10 +353,10 @@ const HANDS = [
     player: [['10','♦'], ['6','♣']], pTotal: '16 (HARD)',
     dealerUp: ['9','♠'], dealerHole: ['8','♥'], dTotal: '17',
     dealerDraws: [],
-    optimal: 'HIT', action: 'STAND', gesture: 'HAND WAVE — STAND',
+    optimal: 'HIT', action: 'STAND', gesture: 'HAND WAVE · STAND',
     reason: 'Hard 16 vs 9 → basic strategy: <span class="hl">HIT</span> (surrender if allowed).',
-    verdict: 'Player <span class="bad">STOOD on hard 16 vs 9</span> — costly deviation. EV given up: <span class="bad">−4.1%</span> of wager.',
-    result: 'LOSS', payout: -100, resultText: 'DEALER 17 BEATS 16 — HOUSE WINS $100',
+    verdict: 'Player <span class="bad">STOOD on hard 16 vs 9</span>. Costly deviation. EV given up: <span class="bad">−4.1%</span> of wager.',
+    result: 'LOSS', payout: -100, resultText: 'DEALER 17 BEATS 16 · HOUSE WINS $100',
     chipLabel: '16v9', ops: [69, '5/6', 102], skill: { score: 61, grade: 'C', adh: '33%', edge: '2.0%', ap: '4.8%', avg: '$100' }
   },
   {
@@ -364,10 +364,10 @@ const HANDS = [
     player: [['A','♠'], ['7','♥']], pTotal: 'SOFT 18',
     dealerUp: ['6','♦'], dealerHole: ['10','♣'], dTotal: '16 → DRAWS',
     dealerDraws: [['9','♥']],
-    optimal: 'DOUBLE', action: 'STAND', gesture: 'HAND WAVE — STAND',
+    optimal: 'DOUBLE', action: 'STAND', gesture: 'HAND WAVE · STAND',
     reason: 'Soft 18 vs 6 → basic strategy: <span class="hl">DOUBLE DOWN</span>.',
-    verdict: 'Player <span class="bad">failed to double soft 18 vs 6</span>. Won the hand anyway — <span class="hl">outcome ≠ skill</span>. EV given up: <span class="bad">−9.2%</span>.',
-    result: 'WIN', payout: 150, resultText: 'DEALER BUSTS 25 — PLAYER WINS $150',
+    verdict: 'Player <span class="bad">failed to double soft 18 vs 6</span>. Won the hand anyway. <span class="hl">outcome ≠ skill</span>. EV given up: <span class="bad">−9.2%</span>.',
+    result: 'WIN', payout: 150, resultText: 'DEALER BUSTS 25 · PLAYER WINS $150',
     chipLabel: 'A7v6', ops: [71, '5/6', 104], skill: { score: 58, grade: 'C−', adh: '31%', edge: '2.2%', ap: '3.1%', avg: '$117' }
   },
   {
@@ -375,11 +375,11 @@ const HANDS = [
     player: [['8','♣'], ['8','♦']], pTotal: 'PAIR 8-8 (16)',
     dealerUp: ['10','♥'], dealerHole: ['Q','♠'], dTotal: '20',
     dealerDraws: [],
-    optimal: 'SPLIT', action: 'HIT', gesture: 'TAP FELT — HIT',
-    hitCard: ['K','♦'], hitTotal: '26 — BUST',
+    optimal: 'SPLIT', action: 'HIT', gesture: 'TAP FELT · HIT',
+    hitCard: ['K','♦'], hitTotal: '26 BUST',
     reason: 'Pair of 8s vs 10 → basic strategy: <span class="hl">ALWAYS SPLIT 8s</span>.',
     verdict: 'Player <span class="bad">hit 8-8 instead of splitting</span> and busted. Signature low-skill error. EV given up: <span class="bad">−11.4%</span>.',
-    result: 'LOSS', payout: -100, resultText: 'PLAYER BUSTS 26 — HOUSE WINS $100',
+    result: 'LOSS', payout: -100, resultText: 'PLAYER BUSTS 26 · HOUSE WINS $100',
     chipLabel: '88vT', ops: [72, '6/6', 104], skill: { score: 54, grade: 'C−', adh: '29%', edge: '2.3%', ap: '2.4%', avg: '$112' }
   },
   {
@@ -387,10 +387,10 @@ const HANDS = [
     player: [['J','♥'], ['Q','♣']], pTotal: '20 (HARD)',
     dealerUp: ['7','♦'], dealerHole: ['9','♣'], dTotal: '16 → DRAWS',
     dealerDraws: [['8','♠']],
-    optimal: 'STAND', action: 'STAND', gesture: 'HAND WAVE — STAND',
+    optimal: 'STAND', action: 'STAND', gesture: 'HAND WAVE · STAND',
     reason: 'Hard 20 vs 7 → basic strategy: <span class="hl">STAND</span>.',
     verdict: '<span class="good">Correct play.</span> Bet sizing still shows <span class="hl">zero correlation with count</span> (r = 0.04) → not an advantage player.',
-    result: 'WIN', payout: 125, resultText: 'DEALER BUSTS 24 — PLAYER WINS $125',
+    result: 'WIN', payout: 125, resultText: 'DEALER BUSTS 24 · PLAYER WINS $125',
     chipLabel: '20v7', ops: [74, '6/6', 107], skill: { score: 56, grade: 'C−', adh: '31%', edge: '2.3%', ap: '2.1%', avg: '$118' }
   },
 ];
@@ -412,7 +412,7 @@ async function runScene1() {
   clockTimer = setInterval(() => { if (!paused) { clockSec += SPEED; $('hudClock').textContent = fmtClock(clockSec); } }, 350);
 
   await titleCard('PHASE 01 / 06', 'Computer Vision Capture',
-    'One overhead camera per table on the Fontainebleau Las Vegas casino floor. Every card, chip, gesture and payout — detected, classified and scored in real time. No pit clipboard. No guesswork.');
+    'One overhead camera per table on the Fontainebleau Las Vegas casino floor. Every card, chip, gesture and payout detected, classified, and scored in real time. No pit clipboard. No guesswork.');
 
   /* lock onto the scene */
   logEvent('POSE', 'Dealer skeleton locked · conf 99.1%');
@@ -421,8 +421,8 @@ async function runScene1() {
   logEvent('POSE', 'Player seat 5 occupied · re-ID match');
   cvBox(34, 78, 32, 19, 'PLAYER #4187 · SEAT 5 · 98.7%', 'roi');
   await sleep(800);
-  logEvent('FACE', 'Identity: Fontainebleau Rewards match — M. Torres (SILVER)', '');
-  logEvent('SYNC', 'RFID bet data linked — wagers cross-validated', 'eval');
+  logEvent('FACE', 'Identity: Fontainebleau Rewards match · M. Torres (SILVER)', '');
+  logEvent('SYNC', 'RFID bet data linked · wagers cross-validated', 'eval');
   cvBox(42.5, 55, 15, 15, 'BET ZONE · SEAT 5', 'roi');
   await sleep(1000);
 
@@ -431,7 +431,7 @@ async function runScene1() {
     await playHand(HANDS[i], i);
   }
 
-  await banner('SESSION PROFILE COMPLETE — STREAMING TO INTELLIGENCE LAYER', 'neutral', 2400);
+  await banner('SESSION PROFILE COMPLETE · STREAMING TO INTELLIGENCE LAYER', 'neutral', 2400);
   clearInterval(clockTimer);
 }
 
@@ -498,10 +498,10 @@ async function playHand(h, idx) {
   /* --- verdict --- */
   const good = h.action === h.optimal;
   const vText = h.verdictBanner ||
-    (good ? `✓ OPTIMAL PLAY — ${h.action}` : `✗ DEVIATION — PLAYED ${h.action}, OPTIMAL ${h.optimal}`);
+    (good ? `✓ OPTIMAL PLAY · ${h.action}` : `✗ DEVIATION · PLAYED ${h.action}, OPTIMAL ${h.optimal}`);
   await banner(vText, h.verdictClass || (good ? 'good' : 'bad'), 1800);
   $('strategyBody').innerHTML = h.reason + '<br>' + h.verdict;
-  logEvent('EVAL', h.verdictLog || (good ? 'Decision optimal — skill model updated' : `Deviation logged — optimal was ${h.optimal}`), good ? 'eval' : 'alert');
+  logEvent('EVAL', h.verdictLog || (good ? 'Decision optimal · skill model updated' : `Deviation logged · optimal was ${h.optimal}`), good ? 'eval' : 'alert');
   addHandChip(h.chipLabel, h.chipGood !== undefined ? h.chipGood : good);
   setSkill(h.skill);
   await sleep(1100);
@@ -509,7 +509,7 @@ async function playHand(h, idx) {
   /* --- dealer resolves --- */
   flipCard(hole, h.dealerHole[0], h.dealerHole[1]);
   cardBox(48.5, 16.5, `${h.dealerHole[0]}${h.dealerHole[1]}`);
-  logEvent('OCR', `Hole card revealed: ${h.dealerHole[0]}${h.dealerHole[1]} — dealer ${h.dTotal}`, 'ocr');
+  logEvent('OCR', `Hole card revealed: ${h.dealerHole[0]}${h.dealerHole[1]} · dealer ${h.dTotal}`, 'ocr');
   updateCountHud(h.dealerHole[0]);
   await sleep(700);
 
@@ -775,7 +775,7 @@ const DERIVED = [
   ['Effective house edge vs this player', '2.3% (baseline 0.5%)', 92, '#3FB77E'],
   ['Theo uplift from skill errors', '+360%', 86, '#3FB77E'],
   ['Bet spread ↔ count correlation', 'r = 0.04 (none)', 8, '#7FA6D9'],
-  ['Churn risk — checkout tomorrow 11:00', '42%', 42, '#C9A227'],
+  ['Churn risk (checkout tomorrow 11:00)', '42%', 42, '#C9A227'],
   ['Retention value (2 extra days)', '$824 theo', 74, '#3FB77E'],
 ];
 
@@ -786,18 +786,18 @@ async function runScene2() {
   $('profileGrid').innerHTML = '';
   $('derivedList').innerHTML = '';
   $('pipeNote').innerHTML = '';
-  $('pfName').textContent = '— — —';
+  $('pfName').textContent = '···';
   $('pfTier').textContent = 'RESOLVING IDENTITY…';
   const st = $('pfStatus'); st.textContent = 'SYNCING'; st.classList.remove('done');
 
   await titleCard('PHASE 03 / 06', 'Data Aggregation',
-    'Every detection event streams into one unified player record — the full rating a casino currently needs three systems and a pit boss to approximate, built automatically per hand.');
+    'Every detection event streams into one unified player record: the full rating a casino currently needs three systems and a pit boss to approximate, built automatically per hand.');
 
   /* build empty field grid */
   const fields = PROFILE_FIELDS.map(([label]) => {
     const f = document.createElement('div');
     f.className = 'pf-field';
-    f.innerHTML = `<label>${label}</label><b>—</b>`;
+    f.innerHTML = `<label>${label}</label><b>–</b>`;
     $('profileGrid').appendChild(f);
     return f;
   });
@@ -861,17 +861,17 @@ async function runScene2() {
 const INTEL_COMP = {
   mark: 'scene3', tab: 4,
   title: ['PHASE 04 / 06', 'Intelligence Layer → Host',
-    'The engine prices every action the casino could take — gross theo gained, comp cost, net expected value — and pushes the most profitable move to the host\'s phone while the player is still in the seat.'],
+    'The engine prices every action the casino could take (gross theo gained, comp cost, net expected value) and pushes the most profitable move to the host\'s phone while the player is still in the seat.'],
   inputHead: 'INPUT · PLAYER #4187',
   inputLines: [
-    'player_id      : <b>#4187 — M. Torres</b>',
+    'player_id      : <b>#4187 · M. Torres</b>',
     'tier           : <b>SILVER</b> · Fontainebleau Rewards',
     'tier_credits   : <b>38,680</b> · <span class="warn">1,320 short of GOLD</span>',
     'live_position  : <b>PIT 3 · BJ-07 · SEAT 5</b>',
     'skill_grade    : <span class="warn">C− (adherence 31%)</span>',
     'effective_edge : <span class="good">2.3%</span> vs 0.5% baseline',
     'adw            : <span class="good">$412 / day</span>',
-    'ap_probability : <span class="good">2.1% — cleared</span>',
+    'ap_probability : <span class="good">2.1% · cleared</span>',
     'room_status    : Panorama Ste 5804 · <span class="bad">CHECKOUT 11:00</span>',
     'churn_risk     : <span class="warn">42%</span>',
     'objective      : <b>maximize retained theo</b>',
@@ -883,22 +883,22 @@ const INTEL_COMP = {
     ['THEO IF RETAINED +2 DAYS', '+$824', 'good'],
     ['DECISION LATENCY', '212 ms', 'cyan'],
   ],
-  actionsHead: 'ACTION EVALUATION — NET EV = GROSS THEO GAIN − COMP COST',
+  actionsHead: 'ACTION EVALUATION · NET EV = GROSS THEO GAIN − COMP COST',
   actions: [
-    { name: 'Extend suite comp +2 nights — Panorama Suite', sub: '0.91 accept × 0.68 stay × $1,086 wknd theo',
+    { name: 'Extend suite comp +2 nights · Panorama Suite', sub: '0.91 accept × 0.68 stay × $1,086 wknd theo',
       gain: '+$672', cost: '−$260', ev: '+$412', pct: 100, ok: true, selected: true },
     { name: 'Award 1,320 Tier Credits → GOLD now', sub: '0.44 return-trip lift × $1,540 avg trip theo',
       gain: '+$678', cost: '−$360', ev: '+$318', pct: 77, ok: true },
-    { name: 'BleauLive Theater tickets — Saturday', sub: '0.74 accept × $605 extra-session theo',
+    { name: 'BleauLive Theater tickets · Saturday', sub: '0.74 accept × $605 extra-session theo',
       gain: '+$448', cost: '−$150', ev: '+$298', pct: 72, ok: true },
-    { name: 'Dinner for two — Mother Wolf', sub: '0.88 accept × $245 late-night play after dinner',
+    { name: 'Dinner for two · Mother Wolf', sub: '0.88 accept × $245 late-night play after dinner',
       gain: '+$216', cost: '−$120', ev: '+$96', pct: 23, ok: true },
     { name: '$100 free slot play', sub: '$185 reinvested play · cannibalizes table time',
       gain: '+$185', cost: '−$100', ev: '+$85', pct: 20, ok: true },
     { name: 'No action', sub: '0.42 churn × $824 remaining-trip theo lost',
       gain: '$0', cost: '$0', ev: '−$346', pct: 0, ok: false },
   ],
-  traceHead: 'DECISION TRACE — SUITE COMP EXTENSION',
+  traceHead: 'DECISION TRACE · SUITE COMP EXTENSION',
   traceLines: [
     'P(accept offer) <b>0.91</b> × P(stays 2 nights) <b>0.68</b> = <b>0.62</b> conversion',
     '× 2-day theo <b>$824</b> × weekend uplift <b>1.32</b> = <b class="good">+$672 expected gross</b>',
@@ -909,7 +909,7 @@ const INTEL_COMP = {
   notifClass: 'notif priority',
   notifHTML: `
     <div class="notif-head">⚡ RECOMMENDED ACTION <span class="when">now</span></div>
-    <div class="notif-title">Michael Torres — Silver</div>
+    <div class="notif-title">Michael Torres · Silver</div>
     <div class="notif-body">
       At <b>BJ-07, Pit 3</b> right now · down $285 tonight.<br>
       Offer: <b>extend suite comp 2 nights</b> (Panorama Suite 5804).
@@ -926,9 +926,9 @@ const INTEL_COMP = {
       <button>Dismiss</button>
     </div>`,
   toasts: [
-    '<b>✓ PMS</b> — Panorama Suite 5804 extended through Thursday',
-    '<b>✓ CRM</b> — offer sent via Fontainebleau Rewards app · read 21:29',
-    '<b>✓ LEDGER</b> — comp logged · $260 against $824 projected theo',
+    '<b>✓ PMS</b> · Panorama Suite 5804 extended through Thursday',
+    '<b>✓ CRM</b> · offer sent via Fontainebleau Rewards app · read 21:29',
+    '<b>✓ LEDGER</b> · comp logged · $260 against $824 projected theo',
   ],
 };
 
@@ -936,16 +936,16 @@ const INTEL_AP = {
   mark: 'apdecision', tab: 5,
   title: ['PHASE 05 / 06', 'Game Protection Decision',
     'Same engine, opposite objective: when the vision layer confirms an advantage player, the system prices every defensive option and protects the house before the next shoe.'],
-  inputHead: 'INPUT · PLAYER #2291 — GAME PROTECTION',
+  inputHead: 'INPUT · PLAYER #2291 · GAME PROTECTION',
   inputLines: [
-    'player_id      : <b>#2291 — J. Chen</b>',
+    'player_id      : <b>#2291 · J. Chen</b>',
     'tier           : <b>BLEAU</b> · account 11 days old',
     'live_position  : <b>PIT 3 · BJ-07 · SEAT 5</b>',
     'buy_in         : <b>$5,000 cash</b> · auto-logged (Title 31)',
     'skill_grade    : <span class="bad">A+ (adherence 100%)</span>',
     'bet_spread     : <span class="bad">12:1 · count corr r = 0.96</span>',
     'effective_edge : <span class="bad">−1.1% (player favored)</span>',
-    'ap_probability : <span class="bad">94.2% — CONFIRMED</span>',
+    'ap_probability : <span class="bad">94.2% · CONFIRMED</span>',
     'exposure       : <span class="bad">$8,200 / trip</span>',
     'objective      : <b>minimize loss · retain non-AP play</b>',
   ],
@@ -956,11 +956,11 @@ const INTEL_AP = {
     ['EXPOSURE / TRIP', '−$8,200', 'bad'],
     ['DECISION LATENCY', '190 ms', 'cyan'],
   ],
-  actionsHead: 'ACTION EVALUATION — NET EV = LOSS AVOIDED − REVENUE GIVEN UP',
+  actionsHead: 'ACTION EVALUATION · NET EV = LOSS AVOIDED − REVENUE GIVEN UP',
   actions: [
-    { name: 'Flat-bet request — cap at $50', sub: 'kills 12:1 spread · keeps his −EV flat play + other games',
+    { name: 'Flat-bet request, cap at $50', sub: 'kills 12:1 spread · keeps his −EV flat play + other games',
       gain: '+$7,400', cost: '−$0', ev: '+$7,400', pct: 100, ok: true, selected: true },
-    { name: 'Full back-off — no more blackjack', sub: 'ends exposure · loses his poker/baccarat action + PR risk',
+    { name: 'Full back-off: no more blackjack', sub: 'ends exposure · loses his poker/baccarat action + PR risk',
       gain: '+$8,200', cost: '−$1,600', ev: '+$6,600', pct: 89, ok: true },
     { name: 'No mid-shoe entry (block back-counting)', sub: 'halves his edge windows · he adapts within days',
       gain: '+$3,900', cost: '−$0', ev: '+$3,900', pct: 53, ok: true },
@@ -969,7 +969,7 @@ const INTEL_AP = {
     { name: 'No action', sub: '1.4% player edge × $300 avg high-count bet, 3-day trip',
       gain: '$0', cost: '$0', ev: '−$8,200', pct: 0, ok: false },
   ],
-  traceHead: 'DECISION TRACE — FLAT-BET REQUEST',
+  traceHead: 'DECISION TRACE · FLAT-BET REQUEST',
   traceLines: [
     'Hi-Lo correlation <b>r = 0.96</b> · bet spread <b>12:1</b> ($25 → $300 at TC ≥ +3)',
     'player edge at high counts <b>1.4%</b> × $300 × 42 hands/hr × 4.5 hr × 3 days = <b class="bad">−$8,200 exposure</b>',
@@ -980,10 +980,10 @@ const INTEL_AP = {
   notifClass: 'notif priority alert',
   notifHTML: `
     <div class="notif-head">⚠ GAME PROTECTION <span class="when">now</span></div>
-    <div class="notif-title">J. Chen — Bleau · AP confirmed 94%</div>
+    <div class="notif-title">J. Chen · Bleau · AP confirmed 94%</div>
     <div class="notif-body">
       At <b>BJ-07, Pit 3</b> right now · spread $25→$300 with the count.<br>
-      Action: <b>flat-bet request, $50 max</b> — pit supervisor to deliver.
+      Action: <b>flat-bet request, $50 max</b>. Pit supervisor to deliver.
     </div>
     <div class="notif-why">
       <b>WHY:</b> Perfect play + 12:1 spread (r = 0.96) = counting.
@@ -996,9 +996,9 @@ const INTEL_AP = {
       <button>Dismiss</button>
     </div>`,
   toasts: [
-    '<b>✓ PIT</b> — supervisor P. Ruiz dispatched to BJ-07',
-    '<b>✓ SURVEILLANCE</b> — #2291 flagged · profile shared cross-property',
-    '<b>✓ CRM</b> — comp offers & mailers suspended for #2291',
+    '<b>✓ PIT</b> · supervisor P. Ruiz dispatched to BJ-07',
+    '<b>✓ SURVEILLANCE</b> · #2291 flagged · profile shared cross-property',
+    '<b>✓ CRM</b> · comp offers & mailers suspended for #2291',
   ],
 };
 
@@ -1135,11 +1135,11 @@ const AP_HANDS = [
     player: [['9','♣'], ['2','♦']], pTotal: '11 (HARD)',
     dealerUp: ['6','♠'], dealerHole: ['9','♦'], dTotal: '15 → DRAWS',
     dealerDraws: [['J','♣']],
-    optimal: 'DOUBLE', action: 'DOUBLE', gesture: 'CHIP PUSH — DOUBLE DOWN',
+    optimal: 'DOUBLE', action: 'DOUBLE', gesture: 'CHIP PUSH · DOUBLE DOWN',
     hitCard: ['K','♥'], hitTotal: '21',
     reason: '11 vs 6 → basic strategy: <span class="hl">DOUBLE DOWN</span>.',
     verdict: '<span class="good">Textbook.</span> Minimum bet while the count is neutral (TC +0.4). Watching bet sizing…',
-    result: 'WIN', payout: 50, resultText: 'DEALER BUSTS 25 — PLAYER WINS $50 (DOUBLED)',
+    result: 'WIN', payout: 50, resultText: 'DEALER BUSTS 25 · PLAYER WINS $50 (DOUBLED)',
     chipLabel: '11v6', ops: [78, '3/6', 108],
     skill: { score: 78, grade: 'B+', adh: '100%', edge: '0.3%', ap: '34%', avg: '$25',
              adhCls: 'ok', apCls: 'warn' }
@@ -1149,10 +1149,10 @@ const AP_HANDS = [
     player: [['A','♥'], ['8','♠']], pTotal: 'SOFT 19',
     dealerUp: ['5','♣'], dealerHole: ['10','♦'], dTotal: '15 → DRAWS',
     dealerDraws: [['9','♠']],
-    optimal: 'STAND', action: 'STAND', gesture: 'HAND WAVE — STAND',
+    optimal: 'STAND', action: 'STAND', gesture: 'HAND WAVE · STAND',
     reason: 'Soft 19 vs 5 → basic strategy: <span class="hl">STAND</span>.',
     verdict: '<span class="good">Perfect again.</span> Bet tripled to $75 as the true count climbed to <span class="hl">+2.1</span>. Spread correlation rising: <span class="warn">r = 0.81</span>.',
-    result: 'WIN', payout: 75, resultText: 'DEALER BUSTS 24 — PLAYER WINS $75',
+    result: 'WIN', payout: 75, resultText: 'DEALER BUSTS 24 · PLAYER WINS $75',
     chipLabel: 'A8v5', ops: [78, '3/6', 108],
     skill: { score: 86, grade: 'A−', adh: '100%', edge: '−0.2%', ap: '71%', avg: '$42',
              adhCls: 'ok', edgeCls: 'warn', apCls: 'warn' }
@@ -1162,14 +1162,14 @@ const AP_HANDS = [
     player: [['10','♦'], ['6','♥']], pTotal: '16 (HARD)',
     dealerUp: ['10','♣'], dealerHole: ['6','♦'], dTotal: '16 → DRAWS',
     dealerDraws: [['10','♥']],
-    optimal: 'HIT', action: 'STAND', gesture: 'HAND WAVE — STAND',
-    verdictBanner: '⚠ HI-LO INDEX PLAY — 16v10 STAND AT TC +4.2',
+    optimal: 'HIT', action: 'STAND', gesture: 'HAND WAVE · STAND',
+    verdictBanner: '⚠ HI-LO INDEX PLAY · 16v10 STAND AT TC +4.2',
     verdictClass: 'bad',
-    verdictLog: 'Deviation matches Hi-Lo index — counting signature',
+    verdictLog: 'Deviation matches Hi-Lo index · counting signature',
     chipGood: false,
     reason: '16 vs 10 → basic strategy says HIT. But at <span class="hl">TC ≥ 0</span> the counting index says <span class="bad">STAND</span>.',
     verdict: 'Bet jumped <span class="bad">$25 → $300</span> exactly as TC hit <span class="bad">+4.2</span>. This deviation is only correct for a counter. Spread corr: <span class="bad">r = 0.96</span>.',
-    result: 'WIN', payout: 300, resultText: 'DEALER BUSTS 26 — PLAYER WINS $300',
+    result: 'WIN', payout: 300, resultText: 'DEALER BUSTS 26 · PLAYER WINS $300',
     chipLabel: '16vT idx', ops: [79, '3/6', 108],
     skill: { score: 92, grade: 'A+', adh: '100%*', edge: '−1.1%', ap: '94.2%', avg: '$133',
              adhCls: 'ok', edgeCls: 'warn', apCls: 'warn' }
@@ -1201,14 +1201,14 @@ async function runSceneAP() {
   logEvent('POSE', 'Player seat 5 occupied · new session opened');
   cvBox(34, 78, 32, 19, 'PLAYER #2291 · SEAT 5 · 97.9%', 'roi');
   await sleep(700);
-  logEvent('FACE', 'Identity: J. Chen — BLEAU · account 11 days old', 'alert');
+  logEvent('FACE', 'Identity: J. Chen · BLEAU · account 11 days old', 'alert');
   logEvent('CHIP', 'Buy-in $5,000 cash · auto-logged (Title 31)', 'ocr');
   cvBox(42.5, 55, 15, 15, 'BET ZONE · SEAT 5', 'roi');
   await sleep(1000);
 
   for (const h of AP_HANDS) await playHand(h, 0);
 
-  await banner('ADVANTAGE PLAY CONFIRMED 94.2% — ROUTING TO GAME PROTECTION', 'bad', 2600);
+  await banner('ADVANTAGE PLAY CONFIRMED 94.2% · ROUTING TO GAME PROTECTION', 'bad', 2600);
   clearInterval(clockTimer);
 }
 
@@ -1224,20 +1224,20 @@ const FLOOR_TABLES = [
 ];
 
 const FLOOR_EVENTS = [
-  ['BJ-07', 'ok',    'Comp approved — M. Torres · +$412 EV',
-   '21:29 · <b>BJ-07</b> — Suite comp approved · <b class="good">+$412 EV</b>'],
-  ['BAC-12', 'warn', 'Buy-in $18,000 — auto-logged (Title 31)',
-   '21:44 · <b>BAC-12</b> — $18K buy-in auto-logged · <b class="warn">Title 31</b>'],
-  ['ROU-03', 'ok',   'Rating opened — #5512 (GOLD)',
-   '22:03 · <b>ROU-03</b> — New rated session · #5512 (Gold)'],
-  ['BJ-11', 'warn',  'Dealer pace −12% — coaching flag',
-   '22:18 · <b>BJ-11</b> — Pace 61 hands/hr (−12%) · <b class="warn">ops flag</b>'],
-  ['PAI-02', 'ok',   'Host dispatched — birthday recognition',
-   '22:27 · <b>PAI-02</b> — Host dispatched · #8834 birthday · <b class="good">+$95 EV</b>'],
-  ['BJ-14', 'warn',  'Dealer overpay $75 — recovered',
-   '22:41 · <b>BJ-14</b> — Payout variance caught · <b class="good">+$75 recovered</b>'],
-  ['BJ-07', 'alert', 'AP flat-bet enforced — $7.4K protected',
-   '22:56 · <b>BJ-07</b> — Flat-bet enforced · #2291 · <b class="good">$7.4K protected</b>'],
+  ['BJ-07', 'ok',    'Comp approved · M. Torres · +$412 EV',
+   '21:29 · <b>BJ-07</b> · Suite comp approved · <b class="good">+$412 EV</b>'],
+  ['BAC-12', 'warn', 'Buy-in $18,000. auto-logged (Title 31)',
+   '21:44 · <b>BAC-12</b> · $18K buy-in auto-logged · <b class="warn">Title 31</b>'],
+  ['ROU-03', 'ok',   'Rating opened · #5512 (GOLD)',
+   '22:03 · <b>ROU-03</b> · New rated session · #5512 (Gold)'],
+  ['BJ-11', 'warn',  'Dealer pace −12%. coaching flag',
+   '22:18 · <b>BJ-11</b> · Pace 61 hands/hr (−12%) · <b class="warn">ops flag</b>'],
+  ['PAI-02', 'ok',   'Host dispatched. birthday recognition',
+   '22:27 · <b>PAI-02</b> · Host dispatched · #8834 birthday · <b class="good">+$95 EV</b>'],
+  ['BJ-14', 'warn',  'Dealer overpay $75. recovered',
+   '22:41 · <b>BJ-14</b> · Payout variance caught · <b class="good">+$75 recovered</b>'],
+  ['BJ-07', 'alert', 'AP flat-bet enforced · $7.4K protected',
+   '22:56 · <b>BJ-07</b> · Flat-bet enforced · #2291 · <b class="good">$7.4K protected</b>'],
 ];
 
 async function runSceneFloor() {
@@ -1248,7 +1248,7 @@ async function runSceneFloor() {
   $('floorStats').innerHTML = '';
 
   await titleCard('PHASE 06 / 06', 'The Whole Floor, One Brain',
-    'Every table, every seat, every decision — the same pipeline running property-wide, feeding one host queue. One table was the demo. This is the product.');
+    'Every table, every seat, every decision. the same pipeline running property-wide, feeding one host queue. One table was the demo. This is the product.');
 
   /* stats bar */
   const stats = [
