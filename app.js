@@ -119,8 +119,12 @@ function showScene(n, tab = n, surv = false) {
 }
 
 /* section header: persistent context strip up top plus a broadcast-style
-   lower third that fades in at each section start. Total duration matches
-   the old full-screen card so chapter times hold. */
+   lower third that fades in at each section start. The awaited pause matches
+   the old full-screen card so chapter times hold; the lower third itself
+   lingers on a wall-clock timer so viewers have time to read it. */
+const LT_DISPLAY_MS = 7000;   // real time the lower third stays up
+let ltToken = 0, ltHideTimer = 0;
+
 async function titleCard(kicker, main, sub, hold = 2600) {
   $('contextBar').classList.remove('on');
   $('lowerThird').classList.remove('show');
@@ -133,8 +137,12 @@ async function titleCard(kicker, main, sub, hold = 2600) {
   $('ltText').textContent = sub;
   $('contextBar').classList.add('on');
   $('lowerThird').classList.add('show');
+  const tok = ++ltToken, myRun = runId;
+  clearTimeout(ltHideTimer);
+  ltHideTimer = setTimeout(() => {
+    if (tok === ltToken && myRun === runId) $('lowerThird').classList.remove('show');
+  }, LT_DISPLAY_MS);
   await sleep(hold + 350);
-  $('lowerThird').classList.remove('show');
 }
 
 async function startDemo(targetMs = 0) {
