@@ -118,16 +118,23 @@ function showScene(n, tab = n, surv = false) {
     b.classList.toggle('active', +b.dataset.scene === tab));
 }
 
-/* context strip: quiet section header instead of a full-screen title card.
-   Keeps the same total duration as the old overlay so chapter times hold. */
+/* section header: persistent context strip up top plus a broadcast-style
+   lower third that fades in at each section start. Total duration matches
+   the old full-screen card so chapter times hold. */
 async function titleCard(kicker, main, sub, hold = 2600) {
   $('contextBar').classList.remove('on');
+  $('lowerThird').classList.remove('show');
   await sleep(150);
   $('ctxPhase').textContent = kicker;
   $('ctxMain').textContent = main;
   $('ctxText').textContent = sub;
+  $('ltKicker').textContent = kicker;
+  $('ltMain').textContent = main;
+  $('ltText').textContent = sub;
   $('contextBar').classList.add('on');
+  $('lowerThird').classList.add('show');
   await sleep(hold + 350);
+  $('lowerThird').classList.remove('show');
 }
 
 async function startDemo(targetMs = 0) {
@@ -137,6 +144,7 @@ async function startDemo(targetMs = 0) {
   ffTarget = Math.max(0, Math.min(targetMs, TOTAL - 1000));
   $('pauseBtn').textContent = 'Pause';
   $('endOverlay').classList.remove('show');
+  $('lowerThird').classList.remove('show');
   updateScrubber();
   try {
     await runScene1();

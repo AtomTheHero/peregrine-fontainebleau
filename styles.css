@@ -636,6 +636,23 @@ body.surv-mode #survPanel{display:flex}
 .queue-item.q-warn{border-left-color:var(--amber)}
 .queue-item.q-alert{border-left-color:var(--red)}
 
+/* ---------- section lower third ---------- */
+#lowerThird{
+  position:absolute;left:26px;bottom:30px;z-index:40;
+  max-width:640px;padding:14px 20px 15px;
+  background:rgba(13,15,18,.96);border:1px solid var(--line2);border-left:3px solid var(--brass);
+  border-radius:2px;box-shadow:0 16px 44px rgba(0,0,0,.55);
+  opacity:0;transform:translateY(12px);pointer-events:none;
+  transition:opacity .35s ease-out,transform .35s ease-out;
+}
+#lowerThird.show{opacity:1;transform:none}
+.lt-kicker{
+  font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:1.2px;
+  color:var(--brass);margin-bottom:5px;
+}
+.lt-main{font-size:17px;font-weight:600;letter-spacing:.1px}
+.lt-text{font-size:12.5px;line-height:1.65;color:var(--dim);margin-top:5px}
+
 /* ---------- end state ---------- */
 .end-overlay{
   position:absolute;inset:0;z-index:45;display:none;flex-direction:column;
