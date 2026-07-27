@@ -3,36 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Peregrine · Casino Intelligence</title>
+<title>Peregrine</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=9">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
 
 <header id="topbar">
-  <div class="brand">PEREGRINE<span class="brand-rule"></span></div>
+  <div class="brand">
+    <span class="brand-name">Peregrine</span>
+    <span class="brand-env">Fontainebleau Las Vegas / Pit 3</span>
+  </div>
   <nav id="phaseNav">
-    <button class="phase-btn" data-scene="1">Vision</button>
-    <button class="phase-btn" data-scene="2">Surveillance</button>
-    <button class="phase-btn" data-scene="3">Player Data</button>
-    <button class="phase-btn" data-scene="4">Decision</button>
-    <button class="phase-btn" data-scene="5">Game Protection</button>
+    <button class="phase-btn" data-scene="1">Live Table</button>
+    <button class="phase-btn" data-scene="2">Incidents</button>
+    <button class="phase-btn" data-scene="3">Player Record</button>
+    <button class="phase-btn" data-scene="4">Comp Decision</button>
+    <button class="phase-btn" data-scene="5">Advantage Play</button>
     <button class="phase-btn" data-scene="6">Floor</button>
   </nav>
-  <div class="controls">
-    <button id="pauseBtn">Pause</button>
-    <button id="restartBtn">Restart</button>
+  <div class="topbar-right">
+    <span class="session-tag">Recorded session / Jul 22, 21:14</span>
   </div>
 </header>
 
+<div id="contextBar">
+  <span class="ctx-kicker" id="ctxPhase"></span>
+  <span class="ctx-main" id="ctxMain"></span>
+  <span class="ctx-text" id="ctxText"></span>
+</div>
+
 <main id="stage">
 
-  <!-- ============ SCENE 1 : VISION CAPTURE ============ -->
+  <!-- ============ SCENE 1 : LIVE TABLE ============ -->
   <section id="scene1" class="scene">
     <div class="feed-wrap">
       <div class="feed" id="feed">
-        <!-- table felt — Fontainebleau Las Vegas layout -->
+        <!-- table felt, Fontainebleau Las Vegas layout -->
         <div class="felt">
           <svg class="felt-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
             <defs>
@@ -62,7 +70,7 @@
             <span>5 CARD BUST &#183;&#183;&#183;&#183;&#183;&#183;&#183; 4 TO 1</span>
             <span>3-4 CARD BUST &#183;&#183;&#183;&#183;&#183; 2 TO 1</span>
           </div>
-          <div class="felt-limits">BLACKJACK · $25–$500</div>
+          <div class="felt-limits">BLACKJACK &#183; $25 TO $500</div>
           <div class="chip-rack"></div>
           <div class="dealer-shadow"></div>
           <div class="player-shadow"></div>
@@ -79,14 +87,14 @@
         <div class="feed-hud">
           <div class="hud-left">
             <span class="rec-dot"></span> LIVE
-            <span class="hud-cam">Fontainebleau · Pit 3 · Table BJ-07 · Cam 12</span>
+            <span class="hud-cam">PIT 3 / BJ-07 / CAM 12</span>
           </div>
           <div class="hud-right">
             <span id="hudClock">21:14:32</span>
           </div>
         </div>
         <div class="feed-hud-bottom">
-          <span id="hudOps">Pace 68 hands/hr · Occupancy 5/6 · Dealer eff 101%</span>
+          <span id="hudOps">Pace 68 hands/hr &#183; Occupancy 5/6 &#183; Dealer eff 101%</span>
           <span id="hudHands">Session hands: 43</span>
         </div>
         <div id="actionBanner"></div>
@@ -95,14 +103,14 @@
     </div>
 
     <aside class="panel live-panel">
-      <div class="panel-title">Live analysis <span class="live-dot"></span></div>
+      <div class="panel-title">Seat 5 rating <span class="live-dot"></span></div>
 
       <div class="skill-hero">
         <div>
           <label class="klabel">Skill score</label>
           <div class="skill-num-row">
-            <span id="skillScoreNum" class="skill-num">–</span>
-            <span id="skillGrade" class="grade-pill">–</span>
+            <span id="skillScoreNum" class="skill-num">&ndash;</span>
+            <span id="skillGrade" class="grade-pill">&ndash;</span>
           </div>
         </div>
       </div>
@@ -110,31 +118,31 @@
 
       <div class="group">
         <div class="group-title">Play quality</div>
-        <div class="stat-row"><span>Basic-strategy adherence</span><b id="adherence">–</b></div>
-        <div class="stat-row"><span>Effective house edge</span><b id="effEdge">–</b></div>
-        <div class="stat-row"><span>Advantage-play probability</span><b id="apProb">–</b></div>
+        <div class="stat-row"><span>Basic-strategy adherence</span><b id="adherence">&ndash;</b></div>
+        <div class="stat-row"><span>Effective house edge</span><b id="effEdge">&ndash;</b></div>
+        <div class="stat-row"><span>Advantage-play probability</span><b id="apProb">&ndash;</b></div>
       </div>
 
       <div class="group">
         <div class="group-title">Session</div>
-        <div class="stat-row"><span>Hands played</span><b id="sbHands">–</b></div>
-        <div class="stat-row"><span>Average bet</span><b id="avgBet">–</b></div>
-        <div class="stat-row"><span>Table net (house)</span><b id="sbNet">–</b></div>
-        <div class="stat-row"><span>Theo per hour</span><b id="sbTheo">–</b></div>
+        <div class="stat-row"><span>Hands played</span><b id="sbHands">&ndash;</b></div>
+        <div class="stat-row"><span>Average bet</span><b id="avgBet">&ndash;</b></div>
+        <div class="stat-row"><span>Table net (house)</span><b id="sbNet">&ndash;</b></div>
+        <div class="stat-row"><span>Theo per hour</span><b id="sbTheo">&ndash;</b></div>
       </div>
 
       <div class="group">
-        <div class="group-title">Strategy engine</div>
-        <div id="strategyBody" class="strategy-body">Awaiting hand…</div>
+        <div class="group-title">Hand evaluation</div>
+        <div id="strategyBody" class="strategy-body">Awaiting hand</div>
       </div>
 
       <div class="group">
-        <div class="group-title">Decision history</div>
+        <div class="group-title">Decisions</div>
         <div id="handChips" class="hand-chips"></div>
       </div>
 
       <div class="group stream-group">
-        <div class="group-title">Detection stream</div>
+        <div class="group-title">Event log</div>
         <div id="eventLog" class="event-log"></div>
       </div>
     </aside>
@@ -144,7 +152,7 @@
 
       <div class="skill-hero">
         <div>
-          <label class="klabel">Protected tonight</label>
+          <label class="klabel">Recovered tonight</label>
           <div class="skill-num-row">
             <span id="survTally" class="skill-num surv-tally">$0</span>
           </div>
@@ -166,10 +174,10 @@
     </aside>
   </section>
 
-  <!-- ============ SCENE 2 : PLAYER DATA ============ -->
+  <!-- ============ SCENE 2 : PLAYER RECORD ============ -->
   <section id="scene2" class="scene">
     <div class="agg-col agg-stream">
-      <div class="group-title">Raw event stream · 1,284 events this session</div>
+      <div class="group-title">Event stream / 1,284 this session</div>
       <div id="rawStream" class="raw-stream"></div>
     </div>
 
@@ -178,8 +186,8 @@
         <div class="profile-head">
           <div class="avatar">MT</div>
           <div>
-            <div class="profile-name" id="pfName">···</div>
-            <div class="profile-sub" id="pfTier">Resolving identity…</div>
+            <div class="profile-name" id="pfName">&#183;&#183;&#183;</div>
+            <div class="profile-sub" id="pfTier">Resolving identity</div>
           </div>
           <div class="profile-status" id="pfStatus">Syncing</div>
         </div>
@@ -194,19 +202,19 @@
     </div>
   </section>
 
-  <!-- ============ SCENE 3 : INTELLIGENCE + HOST ============ -->
+  <!-- ============ SCENE 3 : DECISION ENGINE + HOST ============ -->
   <section id="scene3" class="scene">
     <div class="intel-col intel-input">
-      <div class="group-title" id="intelInputHead">Input · Player #4187</div>
+      <div class="group-title" id="intelInputHead">Input / Player #4187</div>
       <div id="intelInput" class="intel-input-card"></div>
     </div>
 
     <div class="intel-col intel-core">
-      <div class="core-ring" id="coreRing">
+      <div class="core-block" id="coreRing">
         <div class="core-inner">
-          <div class="core-title">Intelligence core</div>
+          <div class="core-title">Decision engine</div>
           <div class="core-sims" id="coreSims">0</div>
-          <div class="core-sims-label">simulated player futures</div>
+          <div class="core-sims-label">simulations</div>
         </div>
       </div>
       <div class="core-readouts" id="coreReadouts"></div>
@@ -219,14 +227,14 @@
       <div class="phone">
         <div class="phone-notch"></div>
         <div class="phone-screen">
-          <div class="phone-status"><span id="phoneClock">9:26 PM</span><span>LTE ▮▮▮</span></div>
+          <div class="phone-status"><span id="phoneClock">9:26 PM</span><span>5G</span></div>
           <div class="app-header">
-            <div class="app-logo">PG</div>
+            <div class="app-logo">P</div>
             <div>
               <div class="app-title">Host Console</div>
-              <div class="app-sub">Marcus · Exec Host · Fontainebleau</div>
+              <div class="app-sub">Marcus / Exec Host / Fontainebleau</div>
             </div>
-            <div class="app-live">● LIVE</div>
+            <div class="app-live">LIVE</div>
           </div>
           <div id="phoneFeed" class="phone-feed"></div>
         </div>
@@ -246,33 +254,33 @@
     </aside>
   </section>
 
-  <!-- overlays -->
-  <div id="titleOverlay" class="title-overlay">
-    <div class="title-phase" id="titlePhase"></div>
-    <div class="title-main" id="titleMain"></div>
-    <div class="title-sub" id="titleSub"></div>
-  </div>
-
+  <!-- end state -->
   <div id="endOverlay" class="end-overlay">
-    <div class="end-brand">PEREGRINE</div>
-    <div class="end-line">Every hand seen. Every dollar protected. Every decision optimized.</div>
-    <button id="replayBtn">Replay demo</button>
+    <div class="end-brand">Peregrine</div>
+    <div class="end-line">End of recorded session. BJ-07, Fontainebleau Las Vegas, Jul 22.</div>
+    <button id="replayBtn">Watch again</button>
   </div>
 </main>
 
-<div id="speedCtl" title="Playback speed">
-  <span id="speedVal">2&#215;</span>
-  <input id="speedSlider" type="range" min="0.5" max="4" step="0.25" value="2" aria-label="Playback speed">
-</div>
-
-<div id="scrubber">
-  <div id="scrubChapters"></div>
-  <div id="scrubTrack">
-    <div id="scrubFill"></div>
-    <div id="scrubHead"></div>
+<footer id="transport">
+  <div class="transport-controls">
+    <button id="pauseBtn">Pause</button>
+    <button id="restartBtn">Restart</button>
   </div>
-</div>
+  <div id="scrubber">
+    <div id="scrubChapters"></div>
+    <div id="scrubTrack">
+      <div id="scrubFill"></div>
+      <div id="scrubHead"></div>
+    </div>
+  </div>
+  <div class="sys-meta">
+    <span>bj-07.pit3</span>
+    <span>feeds 5/5</span>
+    <span>e2e 212 ms</span>
+  </div>
+</footer>
 
-<script src="app.js?v=9"></script>
+<script src="app.js?v=10"></script>
 </body>
 </html>
