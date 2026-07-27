@@ -118,24 +118,19 @@ function showScene(n, tab = n, surv = false) {
     b.classList.toggle('active', +b.dataset.scene === tab));
 }
 
-/* section header: persistent context strip up top plus a broadcast-style
-   lower third that fades in at each section start. The awaited pause matches
-   the old full-screen card so chapter times hold; the lower third itself
-   lingers on a wall-clock timer so viewers have time to read it. */
+/* section header: a broadcast-style lower third that fades in at each
+   section start. The awaited pause matches the old full-screen card so
+   chapter times hold; the lower third itself lingers on a wall-clock
+   timer so viewers have time to read it. */
 const LT_DISPLAY_MS = 7000;   // real time the lower third stays up
 let ltToken = 0, ltHideTimer = 0;
 
 async function titleCard(kicker, main, sub, hold = 2600) {
-  $('contextBar').classList.remove('on');
   $('lowerThird').classList.remove('show');
   await sleep(150);
-  $('ctxPhase').textContent = kicker;
-  $('ctxMain').textContent = main;
-  $('ctxText').textContent = sub;
   $('ltKicker').textContent = kicker;
   $('ltMain').textContent = main;
   $('ltText').textContent = sub;
-  $('contextBar').classList.add('on');
   $('lowerThird').classList.add('show');
   const tok = ++ltToken, myRun = runId;
   clearTimeout(ltHideTimer);
@@ -261,7 +256,10 @@ function updateCountHud(rank) {
 
 async function banner(text, cls, hold = 1500) {
   const b = $('actionBanner');
-  b.className = cls; b.textContent = text; b.classList.add('show');
+  b.className = cls;
+  b.innerHTML = `<div class="ab-main">${text}</div>` +
+    `<div class="ab-time">Detected ${fmtClock(clockSec)} -0700</div>`;
+  b.classList.add('show');
   await sleep(hold);
   b.classList.remove('show');
   await sleep(220);
@@ -764,24 +762,24 @@ const RAW_EVENTS = [
 ];
 
 const PROFILE_FIELDS = [
-  ['PLAYER ID', '#4187', ''],
-  ['CLUB LEVEL', 'SILVER', 'sapphire'],
-  ['ZONE', 'PIT 3', ''],
-  ['BANK', 'BJ-BANK-2', ''],
-  ['ASSET', 'BJ-07', ''],
-  ['STAND / SEAT', 'SEAT 5', ''],
-  ['GAME TITLE', 'BLACKJACK 3:2', ''],
-  ['BUY-IN', '$1,000', ''],
-  ['TIME ON DEVICE', '1:12:44', ''],
-  ['HANDS PLAYED', '47', ''],
-  ['AVG BET', '$118', ''],
-  ['NET WIN (HOUSE)', '+$285', 'good'],
-  ['THEO WIN (SESSION)', '$127', 'good'],
-  ['ADW (AVG DAILY WORTH)', '$412', 'good'],
-  ['SKILL GRADE', 'C− (56/100)', 'warn'],
-  ['STRAT ADHERENCE', '31%', 'warn'],
-  ['EFFECTIVE EDGE', '2.3%', 'good'],
-  ['AP PROBABILITY', '2.1%', ''],
+  ['Player ID', '#4187', ''],
+  ['Club level', 'Silver', 'sapphire'],
+  ['Zone', 'Pit 3', ''],
+  ['Bank', 'BJ-BANK-2', ''],
+  ['Asset', 'BJ-07', ''],
+  ['Stand / seat', 'Seat 5', ''],
+  ['Game title', 'Blackjack 3:2', ''],
+  ['Buy-in', '$1,000', ''],
+  ['Time on device', '1:12:44', ''],
+  ['Hands played', '47', ''],
+  ['Avg bet', '$118', ''],
+  ['Net win (house)', '+$285', 'good'],
+  ['Theo win (session)', '$127', 'good'],
+  ['ADW (avg daily worth)', '$412', 'good'],
+  ['Skill grade', 'C− (56/100)', 'warn'],
+  ['Strategy adherence', '31%', 'warn'],
+  ['Effective edge', '2.3%', 'good'],
+  ['AP probability', '2.1%', ''],
 ];
 
 const DERIVED = [
@@ -800,8 +798,8 @@ async function runScene2() {
   $('derivedList').innerHTML = '';
   $('pipeNote').innerHTML = '';
   $('pfName').textContent = '···';
-  $('pfTier').textContent = 'RESOLVING IDENTITY';
-  const st = $('pfStatus'); st.textContent = 'SYNCING'; st.classList.remove('done');
+  $('pfTier').textContent = 'Resolving identity';
+  const st = $('pfStatus'); st.textContent = 'Syncing'; st.classList.remove('done');
 
   await titleCard('03 / 06', 'Player record',
     'Every detection event rolls up into one rated session: the record a casino currently needs three systems and a pit boss to approximate, built per hand.');
@@ -820,7 +818,7 @@ async function runScene2() {
   const streamTimer = setInterval(() => {
     if (paused) return;
     const row = document.createElement('div');
-    row.innerHTML = `<span style="color:#2e3d4e">${String(1201 + evIdx).padStart(4,'0')}</span>  ${RAW_EVENTS[evIdx % RAW_EVENTS.length]}`;
+    row.innerHTML = `<span style="color:#3A3F45">${String(1201 + evIdx).padStart(4,'0')}</span>  ${RAW_EVENTS[evIdx % RAW_EVENTS.length]}`;
     $('rawStream').appendChild(row);
     while ($('rawStream').children.length > 24) $('rawStream').removeChild($('rawStream').firstChild);
     evIdx++;
@@ -831,7 +829,7 @@ async function runScene2() {
   try {
     await sleep(900);
     $('pfName').textContent = 'Michael Torres';
-    $('pfTier').textContent = 'FONTAINEBLEAU REWARDS / SILVER / #4187';
+    $('pfTier').textContent = 'Fontainebleau Rewards / Silver / #4187';
 
     /* fill fields one by one */
     for (let i = 0; i < fields.length; i++) {
@@ -841,7 +839,7 @@ async function runScene2() {
       if (cls) fields[i].querySelector('b').className = cls;
       await sleep(330);
     }
-    st.textContent = 'PROFILE COMPLETE'; st.classList.add('done');
+    st.textContent = 'Profile complete'; st.classList.add('done');
     await sleep(500);
 
     /* derived metrics */
@@ -891,10 +889,10 @@ const INTEL_COMP = {
   ],
   sims: 25000,
   readouts: [
-    ['P(HOUSE PROFITS / DAY)', '97.7%', 'good'],
-    ['PLAYER WIN PROB / HAND', '41.2%', 'warn'],
-    ['THEO IF RETAINED +2 DAYS', '+$824', 'good'],
-    ['DECISION LATENCY', '212 ms', 'cyan'],
+    ['P(house profits / day)', '97.7%', 'good'],
+    ['Player win prob / hand', '41.2%', 'warn'],
+    ['Theo if retained +2 days', '+$824', 'good'],
+    ['Decision latency', '212 ms', 'cyan'],
   ],
   actionsHead: 'Action evaluation / net EV = gross theo gain less comp cost',
   actions: [
@@ -964,10 +962,10 @@ const INTEL_AP = {
   ],
   sims: 28400,
   readouts: [
-    ['P(ADVANTAGE PLAY)', '94.2%', 'bad'],
-    ['HOUSE EDGE VS PLAYER', '−1.1%', 'bad'],
-    ['EXPOSURE / TRIP', '−$8,200', 'bad'],
-    ['DECISION LATENCY', '190 ms', 'cyan'],
+    ['P(advantage play)', '94.2%', 'bad'],
+    ['House edge vs player', '−1.1%', 'bad'],
+    ['Exposure / trip', '−$8,200', 'bad'],
+    ['Decision latency', '190 ms', 'cyan'],
   ],
   actionsHead: 'Action evaluation / net EV = loss avoided less revenue given up',
   actions: [
@@ -1072,10 +1070,10 @@ async function runIntel(cfg) {
     row.className = 'action-item';
     row.innerHTML =
       `<div class="action-name">${a.name}<small>${a.sub}</small></div>` +
-      `<div class="action-col"><label>GROSS</label><b class="g">${a.gain}</b></div>` +
-      `<div class="action-col"><label>COST</label><b class="c">${a.cost}</b></div>` +
+      `<div class="action-col"><label>Gross</label><b class="g">${a.gain}</b></div>` +
+      `<div class="action-col"><label>Cost</label><b class="c">${a.cost}</b></div>` +
       `<div class="action-evbar"><div></div></div>` +
-      `<div class="action-ev ${a.ok ? (a.pct === 0 ? 'zero' : 'pos') : 'neg'}"><label>NET EV</label>${a.ev}</div>`;
+      `<div class="action-ev ${a.ok ? (a.pct === 0 ? 'zero' : 'pos') : 'neg'}"><label>Net EV</label>${a.ev}</div>`;
     $('actionList').appendChild(row);
     row.getBoundingClientRect();
     row.classList.add('on');
@@ -1265,8 +1263,8 @@ async function runSceneFloor() {
 
   /* stats bar */
   const stats = [
-    ['TABLES LIVE', '128'], ['RATED SESSIONS', '61'], ['THEO TODAY', '$438K'],
-    ['LEAKAGE RECOVERED', '$23K'], ['DECISIONS TODAY', '217'], ['COMP ROI', '3.2x'],
+    ['Tables live', '128'], ['Rated sessions', '61'], ['Theo today', '$438K'],
+    ['Leakage recovered', '$23K'], ['Decisions today', '217'], ['Comp ROI', '3.2x'],
   ];
   for (const [label, val] of stats) {
     const el = document.createElement('div');
@@ -1285,7 +1283,7 @@ async function runSceneFloor() {
       `<span class="occ-dot${i < occ ? ' on' : ''}"></span>`).slice(0, game === 'CRAPS' ? 9 : 7).join('');
     el.innerHTML =
       `<div class="ft-head"><b>${id}</b><span>${game}</span></div>` +
-      `<div class="ft-theo">$${theo}<small>/HR THEO</small></div>` +
+      `<div class="ft-theo">$${theo}<small>/hr theo</small></div>` +
       `<div class="ft-occ">${dots}</div>` +
       `<div class="ft-msg"></div>`;
     $('floorGrid').appendChild(el);
