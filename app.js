@@ -122,7 +122,7 @@ function showScene(n, tab = n, surv = false) {
    section start. The awaited pause matches the old full-screen card so
    chapter times hold; the lower third itself lingers on a wall-clock
    timer so viewers have time to read it. */
-const LT_DISPLAY_MS = 7000;   // real time the lower third stays up
+const LT_DISPLAY_MS = 5000;   // real time the lower third stays up
 let ltToken = 0, ltHideTimer = 0;
 
 async function titleCard(kicker, main, sub, hold = 2600) {
