@@ -560,7 +560,9 @@ function addIncident(sev, title, sub, amt) {
   $('survInc').textContent = incidentCount;
   const el = document.createElement('div');
   el.className = 'incident ' + sev;
-  el.innerHTML = `<div class="inc-head"><b>${title}</b><span>${amt || ''}</span></div><div class="inc-sub">${sub}</div>`;
+  /* each incident cites the camera time it was detected at, like a footage reference */
+  el.innerHTML = `<div class="inc-head"><b>${title}</b><span>${amt || ''}</span></div>` +
+    `<div class="inc-sub">${sub} <span class="src-t">${fmtClock(clockSec)} / CAM 12</span></div>`;
   $('incidentList').prepend(el);
   el.getBoundingClientRect();
   el.classList.add('on');
@@ -915,6 +917,7 @@ const INTEL_COMP = {
     'x 2-day theo <b>$824</b> x weekend uplift <b>1.32</b> = <b class="good">+$672 expected gross</b>',
     'less suite cost 2 nights x $130 = <b class="bad">−$260</b>',
     '= <b class="good">NET +$412</b> / ROI <b>1.6x</b> / beats next-best action by <b>$94</b>',
+    '<span class="src-t">sources: BJ-07 CAM 12, 21:14:32-21:26:04 / 47 hands / PMS 5804 / CRM #4187</span>',
   ],
   phoneMark: 'phone',
   notifClass: 'notif priority',
@@ -929,7 +932,8 @@ const INTEL_COMP = {
       <b>Basis:</b> skill grade C−, edge 2.3%, ADW $412/day.
       Checkout 11:00 tomorrow. $672 expected theo less $260 comp
       = <b>net +$412 (1.6x ROI)</b>.
-      Hook: <b>1,320 Tier Credits from Gold</b>.
+      Hook: <b>1,320 Tier Credits from Gold</b>.<br>
+      <span class="src-t">source: BJ-07 CAM 12, 21:14-21:26</span>
     </div>
     <div class="notif-actions">
       <button class="primary">Approve</button>
@@ -986,6 +990,7 @@ const INTEL_AP = {
     'player edge at high counts <b>1.4%</b> x $300 x 42 hands/hr x 4.5 hr x 3 days = <b class="bad">−$8,200 exposure</b>',
     'flat-bet cap removes the spread = <b class="good">+$7,400 protected (91%)</b>, zero comp cost',
     '= <b class="good">NET +$7,400</b> / he keeps playing flat, house edge returns, no confrontation',
+    '<span class="src-t">sources: BJ-07 CAM 12, 22:41:08-22:56:40 / 14 hands / Title 31 log / CRM #2291</span>',
   ],
   phoneMark: 'apphone',
   notifClass: 'notif priority alert',
@@ -999,7 +1004,8 @@ const INTEL_AP = {
     <div class="notif-why">
       <b>Basis:</b> perfect play plus a 12:1 spread (r = 0.96) means counting.
       Exposure $8,200/trip. A flat cap protects <b>+$7,400</b>
-      with zero comp cost and no confrontation.
+      with zero comp cost and no confrontation.<br>
+      <span class="src-t">source: BJ-07 CAM 12, 22:41-22:56</span>
     </div>
     <div class="notif-actions">
       <button class="primary">Approve</button>

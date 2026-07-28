@@ -16,6 +16,7 @@
   --sans:'Archivo',-apple-system,system-ui,sans-serif;
   --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
   --h-top:56px;
+  --h-notice:28px;
   --h-transport:50px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -54,8 +55,26 @@ button{font-family:var(--sans)}
 }
 .session-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--red);animation:blink 1.8s infinite}
 
+/* ---------- compliance notice strip ---------- */
+#notice{
+  height:var(--h-notice);display:flex;align-items:center;gap:10px;
+  padding:0 24px;font-size:11px;color:var(--dim);letter-spacing:.1px;
+  background:rgba(228,177,78,.05);border-bottom:1px solid var(--line);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#notice::before{
+  content:'';width:6px;height:6px;background:var(--amber);
+  border-radius:1px;flex-shrink:0;
+}
+
+/* source-linked timestamp, cites camera time like a footage reference */
+.src-t{
+  font-family:var(--mono);font-size:10px;font-weight:500;
+  color:var(--blue);white-space:nowrap;
+}
+
 /* ---------- stage / scenes ---------- */
-#stage{position:relative;height:calc(100vh - var(--h-top) - var(--h-transport))}
+#stage{position:relative;height:calc(100vh - var(--h-top) - var(--h-notice) - var(--h-transport))}
 .scene{position:absolute;inset:0;display:none;padding:20px;gap:20px}
 .scene.visible{display:flex}
 .group-title{
